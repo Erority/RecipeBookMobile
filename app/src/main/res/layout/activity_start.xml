@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_screen"
+    tools:context=".view.startscreen.StartActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/backdrop_base"
+        android:layout_marginTop="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/logo_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="88dp"
+            app:srcCompat="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/hello_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo_main"
+            android:layout_marginTop="32dp"
+            android:ellipsize="none"
+            android:fontFamily="@font/inter_medium"
+            android:lines="2"
+            android:minLines="2"
+            android:scrollHorizontally="false"
+            android:singleLine="false"
+            android:text="Добро пожаловать !"
+            android:textAlignment="center"
+            android:textColor="@color/font_color"
+            android:textSize="34dp"
+            app:layout_constraintEnd_toEndOf="@id/logo_main"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:layout_below="@+id/hello_text"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="23dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Искусный повар — не тот, у кого на кухне множество приправ, а тот — кто не добавит в блюдо ничего лишнего. Каждый повар, прежде всего, должен иметь хороший вкус."
+            android:textAlignment="center"
+            android:textColor="@color/second_color" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/nextActivityButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="37dp"
+        android:layout_marginBottom="26dp"
+        android:backgroundTint="@color/main_color"
+        android:text="Далее"
+        android:textAlignment="center"
+        android:textColor="@color/font_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="37dp"
+        android:fontFamily="@font/inter_semibold"
+        android:textSize="15dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

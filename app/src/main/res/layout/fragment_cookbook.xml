@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.base_tab_activity.cookbook_fragment.CookbookFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="42dp"
+            android:background="@null"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginTop="23dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Кулинарная книга"
+            android:textSize="34dp"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/font_color"
+            android:fontFamily="@font/inter_medium"/>
+
+        <LinearLayout
+            android:layout_marginTop="6dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/edittext_input"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:drawablePadding="12dp"
+                android:drawableStart="@drawable/ic_baseline_search_24"
+                android:layout_marginHorizontal="20dp"
+                android:background="@null"
+                android:layout_width="185dp"
+                android:layout_height="50dp"/>
+
+            <Button
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="5dp"
+                android:text="Найти"
+                app:backgroundTint="@null"
+                android:background="@drawable/circle"/>
+
+        </LinearLayout>
+
+
+
+        <Button
+            android:id="@+id/buttonAddRecipe"
+            android:text="Добавить рецепт"
+            android:background="@drawable/custom_button"
+            app:backgroundTint="@null"
+            android:textColor="@color/font_color"
+            android:layout_marginTop="17dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:paddingHorizontal="16dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:id="@+id/recipesList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

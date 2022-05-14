@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.base_tab_activity.profile_fragment.ProfileFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <ImageButton
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="42dp"
+        android:background="@null"
+        android:src="@drawable/ic_baseline_arrow_back_ios_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_marginTop="23dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Профиль   "
+            android:textSize="34dp"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/font_color"
+            android:fontFamily="@font/inter_medium"/>
+
+        <ImageView
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:layout_width="145dp"
+            android:layout_height="145dp"/>
+
+        <ImageButton
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:src="@drawable/take_a_photo_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginTop="11dp"
+            android:layout_marginStart="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:text="Номер телефона"
+            android:textColor="@color/main_color"
+            android:textSize="17dp" />
+
+
+        <EditText
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/enterName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/custom_inpute"
+            android:textSize="17dp"
+            android:textColor="@color/font_color"
+            android:fontFamily="@font/inter_medium"
+            android:ems="10"
+            android:inputType="phone" />
+
+        <TextView
+            android:layout_marginTop="11dp"
+            android:layout_marginStart="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:text="Имя"
+            android:textColor="@color/main_color"
+            android:textSize="17dp" />
+
+
+        <EditText
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/enterTextPhone"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/custom_inpute"
+            android:textSize="17dp"
+            android:textColor="@color/font_color"
+            android:fontFamily="@font/inter_medium"
+            android:ems="10"
+            android:inputType="phone" />
+
+        <TextView
+            android:layout_marginTop="11dp"
+            android:layout_marginStart="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:text="Почта"
+            android:textColor="@color/main_color"
+            android:textSize="17dp" />
+
+
+        <EditText
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/enterEmail"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/custom_inpute"
+            android:textSize="17dp"
+            android:textColor="@color/font_color"
+            android:fontFamily="@font/inter_medium"
+            android:ems="10"
+            android:inputType="phone" />
+
+
+        <LinearLayout
+            android:gravity="bottom"
+            android:layout_marginBottom="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:layout_alignParentBottom="true"
+                android:id="@+id/btnEnter"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="37dp"
+                android:backgroundTint="@color/second_color"
+                android:text="Редактировать"
+                android:textSize="15dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

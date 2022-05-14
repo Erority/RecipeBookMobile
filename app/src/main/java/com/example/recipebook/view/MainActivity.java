@@ -1,8 +1,10 @@
-package com.example.recipebook;
+package com.example.recipebook.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.recipebook.R;
 
 public class MainActivity extends AppCompatActivity {
 
