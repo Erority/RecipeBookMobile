@@ -46,7 +46,7 @@ public class RegFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentRegBinding.inflate(inflater, container, false);
 
-        userService = new UserService(getContext());
+        userService = new UserService();
 
         setListeners();
 

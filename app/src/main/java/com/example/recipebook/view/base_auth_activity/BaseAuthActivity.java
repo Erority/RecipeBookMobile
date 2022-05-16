@@ -52,4 +52,9 @@ public class BaseAuthActivity extends AppCompatActivity implements ISwitchFragme
              transaction.commit();
          }
     }
+
+    @Override
+    public void switchWithParam(int option, String jsonObject) {
+
+    }
 }

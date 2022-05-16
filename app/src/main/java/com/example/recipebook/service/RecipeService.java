@@ -4,7 +4,10 @@ import android.content.SharedPreferences;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.recipebook.model.PostRecipe;
+import com.example.recipebook.model.PostUser;
 import com.example.recipebook.model.Recipe;
+import com.example.recipebook.model.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -91,5 +94,24 @@ public class RecipeService {
         });
 
         return recipes;
+    }
+
+    public void postRecipe(String nameRecipe, int minutes, int portions, String content, String image) {
+
+
+        PostRecipe postRecipe = new PostRecipe(nameRecipe, content, portions, minutes, image);
+
+        recipeCall.postRecipe(postRecipe).enqueue(new Callback<Recipe>() {
+            @Override
+            public void onResponse(Call<Recipe> call, retrofit2.Response<Recipe> response) {
+                if(response.isSuccessful())
+                    System.out.println("Success");
+            }
+
+            @Override
+            public void onFailure(Call<Recipe> call, Throwable t) {
+
+            }
+        });
     }
 }

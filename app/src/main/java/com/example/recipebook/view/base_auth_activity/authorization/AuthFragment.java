@@ -1,9 +1,13 @@
 package com.example.recipebook.view.base_auth_activity.authorization;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +21,7 @@ import com.example.recipebook.model.Recipe;
 import com.example.recipebook.model.User;
 import com.example.recipebook.service.UserCall;
 import com.example.recipebook.service.UserService;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -28,6 +33,7 @@ public class AuthFragment extends Fragment {
 
     private FragmentAuthBinding binding;
     private ISwitchFragment iSwitchFragment;
+    private UserService userService;
 
 
     public AuthFragment(ISwitchFragment iSwitchFragment) {
@@ -61,25 +67,39 @@ public class AuthFragment extends Fragment {
         binding.btnEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserService userService = new UserService(binding.enterTextPhone.getText().toString(), binding.enterPassword.getText().toString());
-                UserCall userCall = userService.getRetrofit().create(UserCall.class);
-                userCall.getUser().enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        if (response.isSuccessful()){
-                            iSwitchFragment.switchFragment(2);
-                            return;
-                        }
-                        else if (response.code() == 401)
-                            Toast.makeText(getContext(), "Такого пользователя не существует", Toast.LENGTH_SHORT).show();
-                    }
+                userService = new UserService(binding.enterTextPhone.getText().toString(), binding.enterPassword.getText().toString());
+                userService.getUser();
 
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Toast.makeText(getContext(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                SharedPreferences.Editor editor = preferences.edit();
+
+                editor.putString("password", binding.enterPassword.getText().toString());
+                editor.apply();
+                setObserver();
             }
         });
+    }
+
+    private void setObserver(){
+            userService.getAuthUser().observe(getViewLifecycleOwner(), new Observer<User>() {
+                @Override
+                public void onChanged(User user) {
+                    if (user != null) {
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                        SharedPreferences.Editor editor = preferences.edit();
+                        Gson gson = new Gson();
+
+                        String jsonStrUser = gson.toJson(user);
+
+                        editor.putString("AuthUser", jsonStrUser);
+                        editor.putString("", "");
+                        editor.apply();
+
+
+                        iSwitchFragment.switchFragment(2);
+                    }
+
+                }
+            });
     }
 }

@@ -29,6 +29,7 @@
             android:fontFamily="@font/inter_medium"/>
 
         <Button
+            android:id="@+id/btnAddRecipe"
             android:text="добавить"
             android:background="@drawable/custom_button"
             app:backgroundTint="@null"
@@ -46,9 +47,25 @@
             android:layout_height="wrap_content"
             android:stretchColumns="1">
             <TableRow>
-                <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"/>
+                <FrameLayout android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/background_pick_photo"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"/>
+                    <ImageButton
+
+                    android:id="@+id/btnUserImage"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:src="@drawable/take_a_photo_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                        />
+
+                </FrameLayout>
                 <LinearLayout
                     android:layout_marginStart="26dp"
                     android:orientation="vertical"
@@ -60,22 +77,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter"
-                        android:text="Почта"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Название рецепта"
                         android:textColor="@color/main_color"
                         android:textSize="17dp" />
 
 
                     <EditText
                         android:lines="2"
-                        android:id="@+id/enterEmail"
+                        android:id="@+id/enterRecipeName"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/custom_inpute"
                         android:textSize="17dp"
                         android:textColor="@color/font_color"
                         android:fontFamily="@font/inter_medium"
-                        android:ems="10"
-                        android:inputType="phone" />
+                        android:ems="10"/>
                 </LinearLayout>
             </TableRow>
         </TableLayout>
@@ -96,12 +113,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter"
-                    android:text="Почта"
+                    android:text="Минут"
                     android:textColor="@color/main_color"
                     android:textSize="17dp" />
 
 
                 <EditText
+                    android:id="@+id/enterMinutes"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/custom_inpute"
@@ -128,12 +146,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter"
-                        android:text="Почта"
+                        android:text="Порций"
                         android:textColor="@color/main_color"
                         android:textSize="17dp" />
 
 
                     <EditText
+                        android:id="@+id/enterPortions"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/custom_inpute"
@@ -157,12 +176,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter"
-                android:text="Почта"
+                android:text="Рецепт"
                 android:textColor="@color/main_color"
                 android:textSize="17dp" />
 
 
             <EditText
+                android:layout_gravity="top"
+                android:id="@+id/enterRecipeContent"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -170,8 +191,7 @@
                 android:textSize="17dp"
                 android:textColor="@color/font_color"
                 android:fontFamily="@font/inter_medium"
-                android:ems="10"
-                android:inputType="phone" />
+                android:ems="10" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

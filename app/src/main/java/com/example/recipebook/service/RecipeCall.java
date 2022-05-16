@@ -1,12 +1,18 @@
 package com.example.recipebook.service;
 
+import com.example.recipebook.model.PostRecipe;
+import com.example.recipebook.model.PostUser;
 import com.example.recipebook.model.Recipe;
+import com.example.recipebook.model.User;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface RecipeCall {
 
@@ -16,4 +22,7 @@ public interface RecipeCall {
 
     @GET("Users/FavoriteRecipes")
     Call<List<Recipe>> getFavoriteRecipes();
+
+    @POST("Users/Recipes")
+    Call<Recipe> postRecipe(@Body PostRecipe postRecipe);
 }

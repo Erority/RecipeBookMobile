@@ -1,5 +1,6 @@
 package com.example.recipebook.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipebook.R;
+import com.example.recipebook.interfaces.AdapterItemClickListener;
 import com.example.recipebook.model.Recipe;
 
 import java.nio.charset.StandardCharsets;
@@ -24,8 +27,10 @@ import java.util.List;
 public class CookBookListAdapter extends RecyclerView.Adapter<CookBookListAdapter.ViewHolder> {
 
     private List<Recipe> recipes = new ArrayList<>();
+    private AdapterItemClickListener listener;
 
-    public CookBookListAdapter(){
+    public CookBookListAdapter(AdapterItemClickListener listener){
+        this.listener = listener;
     }
 
     public void setItems(Collection<Recipe> tweets) {
@@ -49,8 +54,15 @@ public class CookBookListAdapter extends RecyclerView.Adapter<CookBookListAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.bindToView(recipes.get(position));
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClicked(recipes.get(position) );
+            }
+        });
     }
 
     @Override
@@ -62,6 +74,7 @@ public class CookBookListAdapter extends RecyclerView.Adapter<CookBookListAdapte
 
         ImageView imageView;
         TextView title;
+        CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +82,7 @@ public class CookBookListAdapter extends RecyclerView.Adapter<CookBookListAdapte
 
             title = itemView.findViewById(R.id.itemTitle);
             imageView = itemView.findViewById(R.id.itemImage);
+            cardView = itemView.findViewById(R.id.cardView);
         }
 
         public void bindToView(Recipe recipe){

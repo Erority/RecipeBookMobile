@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".view.recipe_activity.RecipeActivity">
 
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -28,11 +29,17 @@
         </RelativeLayout>
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="-66dp" />
 
     </LinearLayout>
+
+    <ScrollView
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="vertical"
@@ -41,6 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
+            android:id="@+id/recipeName"
             android:layout_marginTop="5dp"
             android:layout_marginStart="20dp"
             android:textSize="30dp"
@@ -49,17 +57,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-            <TextView
-                android:layout_marginTop="11dp"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter"
-                android:text="Рецепт"
-                android:textColor="@color/font_color"
-                android:textSize="17dp" />
 
             <LinearLayout
+                android:layout_marginHorizontal="15dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -71,6 +71,7 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
+                    android:id="@+id/author"
                     android:layout_marginTop="11dp"
                     android:layout_marginStart="20dp"
                     android:layout_width="wrap_content"
@@ -87,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter"
-                    android:text="Рецепт"
+                    android:text="Автор рецепта"
                     android:textColor="@color/second_color"
                     android:textSize="17dp" />
 
@@ -96,15 +97,17 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
+            android:layout_marginHorizontal="15dp"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_gravity="center"
-                android:src="@drawable/item_portion"
+                android:src="@drawable/item_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <TextView
+                android:id="@+id/minutes"
                 android:layout_marginTop="11dp"
                 android:layout_marginStart="20dp"
                 android:layout_width="wrap_content"
@@ -121,13 +124,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter"
-                android:text="Рецепт"
+                android:text="Минут"
                 android:textColor="@color/second_color"
                 android:textSize="17dp" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginHorizontal="15dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -139,6 +143,7 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
+                android:id="@+id/portions"
                 android:layout_marginTop="11dp"
                 android:layout_marginStart="20dp"
                 android:layout_width="wrap_content"
@@ -155,23 +160,57 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter"
-                android:text="Рецепт"
+                android:text="Порций"
                 android:textColor="@color/second_color"
                 android:textSize="17dp" />
 
         </LinearLayout>
 
 
-            <EditText
+        <TextView
+            android:layout_marginTop="11dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:text="Рецепт"
+            android:textColor="@color/font_color"
+            android:textSize="17dp" />
+
+            <TextView
+                android:id="@+id/recipeContent"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/custom_inpute"
                 android:textSize="17dp"
                 android:textColor="@color/font_color"
                 android:fontFamily="@font/inter_medium"
-                android:ems="10"
-                android:inputType="phone" />
+                android:ems="10" />
+    </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:background="@drawable/bottom_recipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="85dp">
+        <ImageButton
+            android:layout_weight="1"
+            android:layout_marginTop="11dp"
+            android:layout_marginStart="30dp"
+            android:layout_width="78dp"
+            android:layout_height="56dp"/>
+        <Button
+            android:backgroundTint="@color/second_color"
+            android:text="Профиль"
+            android:layout_marginEnd="22dp"
+            android:layout_weight="3"
+            android:layout_marginTop="11dp"
+            android:layout_marginStart="30dp"
+            android:layout_width="215dp"
+            android:layout_height="56dp"/>
+
     </LinearLayout>
 
 </LinearLayout>

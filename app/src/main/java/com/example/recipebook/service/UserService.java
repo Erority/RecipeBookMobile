@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.recipebook.model.PostUser;
 import com.example.recipebook.model.Recipe;
 import com.example.recipebook.model.User;
@@ -27,12 +29,11 @@ public class UserService {
 
     private String BASE_URL = "http://94.228.124.99:5500/api/";
     private UserCall userCall;
-    private Context context;
 
 
-    private SharedPreferences sharedPreferences;
+    private MutableLiveData<User> authUser = new MutableLiveData<>();
 
-    public UserService(String email, String password){
+    public UserService(String email, String password) {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder().addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
@@ -55,23 +56,21 @@ public class UserService {
         userCall = retrofit.create(UserCall.class);
     }
 
-    public UserService(Context context){
+    public UserService() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        this.context = context;
-
         userCall = retrofit.create(UserCall.class);
     }
 
 
-    public void postUser(String name, String password, String email, String phone){
+    public void postUser(String name, String password, String email, String phone) {
 
         PostUser postUser = new PostUser(
-                        name,
-                        phone,
+                name,
+                phone,
                 null);
 
         userCall.postUser(
@@ -80,10 +79,7 @@ public class UserService {
                 .enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, retrofit2.Response<User> response) {
-                        if(response.isSuccessful()){
-                            SharedPreferences sh = context.getSharedPreferences("UserSaver", Context.MODE_PRIVATE);
-                            sh.edit().putString("User", response.body().toString());
-                            sh.edit().commit();
+                        if (response.isSuccessful()) {
                         }
                     }
 
@@ -93,7 +89,36 @@ public class UserService {
                 });
     }
 
-    public Retrofit getRetrofit() {
-        return retrofit;
+    public void getUser() {
+        userCall.getUser().enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, retrofit2.Response<User> response) {
+                authUser.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void putUser(User user){
+        userCall.putUser(user).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, retrofit2.Response<User> response) {
+                if(response.isSuccessful())
+                    System.out.println("DEBUG: User was putting");
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public MutableLiveData<User> getAuthUser() {
+        return authUser;
     }
 }
