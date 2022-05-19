@@ -1,14 +1,9 @@
 package com.example.recipebook.view.base_tab_activity.favourites_fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -16,15 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.recipebook.R;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.example.recipebook.adapter.CookBookListAdapter;
-import com.example.recipebook.databinding.FragmentCookbookBinding;
 import com.example.recipebook.databinding.FragmentFavouritesBinding;
 import com.example.recipebook.interfaces.AdapterItemClickListener;
 import com.example.recipebook.model.Recipe;
-import com.example.recipebook.view.add_new_recipe.AddNewRecipeActivity;
+import com.example.recipebook.model.User;
+import com.example.recipebook.service.RecipeService;
+import com.example.recipebook.utils.UpdateFavouriteRecipes;
 import com.example.recipebook.view.recipe_activity.RecipeActivity;
-import com.example.recipebook.viewmodel.base_tab_viewmodel.CookbookViewModel;
 import com.example.recipebook.viewmodel.base_tab_viewmodel.FavouritesViewModel;
 import com.google.gson.Gson;
 
@@ -37,8 +38,12 @@ public class FavouritesFragment extends Fragment implements AdapterItemClickList
     private CookBookListAdapter adapter;
 
 
-    public FavouritesFragment() {
-        // Required empty public constructor
+    public static final int CHANGE_FAVOURITE_RECIPE = 4;
+
+    private UpdateFavouriteRecipes updateFavouriteRecipes;
+
+    public FavouritesFragment(UpdateFavouriteRecipes updateFavouriteRecipes) {
+        this.updateFavouriteRecipes = updateFavouriteRecipes;
     }
 
     @Override
@@ -61,6 +66,16 @@ public class FavouritesFragment extends Fragment implements AdapterItemClickList
 
         viewModel = new ViewModelProvider(requireActivity()).get(FavouritesViewModel.class);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String authUser = preferences.getString("AuthUser", "");
+        String password = preferences.getString("password", "");
+
+        Gson gson = new Gson();
+
+        User user = gson.fromJson(authUser, User.class);
+        viewModel.setRecipeService(new RecipeService(user.getEmail(), password));
+
+
         viewModel.getRecipesList().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
             @Override
             public void onChanged(List<Recipe> recipes) {
@@ -77,6 +92,16 @@ public class FavouritesFragment extends Fragment implements AdapterItemClickList
                 binding.searchEditText.setText("");
             }
         });
+
+        updateFavouriteRecipes.isUpdate.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                viewModel.updateFavouriteList();
+            }
+        });
+
+        viewModel.updateFavouriteList();
+
         return binding.getRoot();
     }
 
@@ -85,6 +110,13 @@ public class FavouritesFragment extends Fragment implements AdapterItemClickList
             @Override
             public void onClick(View v) {
                 viewModel.filterCollection();
+            }
+        });
+
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
             }
         });
 
@@ -110,12 +142,20 @@ public class FavouritesFragment extends Fragment implements AdapterItemClickList
         binding.recipesList.setAdapter(adapter);
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        viewModel.updateFavouriteList();
+    }
+
     @Override
     public void onItemClicked(Recipe recipe) {
         Intent intent = new Intent(getContext(), RecipeActivity.class);
         Gson gson = new Gson();
         String jsonObject = gson.toJson(recipe);
         intent.putExtra("Recipe", jsonObject);
-        getContext().startActivity(intent);
+        startActivityForResult(intent, CHANGE_FAVOURITE_RECIPE);
     }
 }

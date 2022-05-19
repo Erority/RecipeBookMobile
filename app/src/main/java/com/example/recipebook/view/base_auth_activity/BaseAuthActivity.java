@@ -27,7 +27,7 @@ public class BaseAuthActivity extends AppCompatActivity implements ISwitchFragme
 
         setContentView(binding.getRoot());
 
-        switchFragment(0);
+        switchFragment(1);
     }
 
      public void switchFragment(int fragment){
@@ -36,9 +36,11 @@ public class BaseAuthActivity extends AppCompatActivity implements ISwitchFragme
         switch (fragment){
             case 0:
                 currentFragment = new RegFragment(this);
+                binding.contentAuth.setText("Регистрация");
                 break;
             case 1:
                 currentFragment = new AuthFragment(this);
+                binding.contentAuth.setText("Авторизация");
                 break;
             case 2:
                 Intent intent = new Intent(BaseAuthActivity.this, BaseTabActivity.class);

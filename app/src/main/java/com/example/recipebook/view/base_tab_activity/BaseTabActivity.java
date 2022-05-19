@@ -1,10 +1,11 @@
 package com.example.recipebook.view.base_tab_activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.recipebook.R;
 import com.example.recipebook.adapter.TabPageAdapter;
@@ -12,6 +13,7 @@ import com.example.recipebook.databinding.ActivityBaseTabBinding;
 import com.example.recipebook.interfaces.ISwitchFragment;
 import com.example.recipebook.view.recipe_activity.RecipeActivity;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 public class BaseTabActivity extends AppCompatActivity  implements ISwitchFragment {
     private ActivityBaseTabBinding binding;
@@ -25,10 +27,25 @@ public class BaseTabActivity extends AppCompatActivity  implements ISwitchFragme
         setTabLayout();
     }
 
+
     private void setTabLayout(){
         TabPageAdapter adapter = new TabPageAdapter(this);
 
         binding.viewPager.setAdapter(adapter);
+
+        new TabLayoutMediator(binding.tabLayout, binding.viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                if (position==0){
+                    tab.setIcon(getResources().getDrawable(R.drawable.grid));
+                } else if(position == 1){
+                    tab.setIcon(getResources().getDrawable(R.drawable.heart));
+                } else {
+                    tab.setIcon(getResources().getDrawable(R.drawable.user));
+                }
+            }
+        }).attach();
+
 
         binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -67,4 +84,5 @@ public class BaseTabActivity extends AppCompatActivity  implements ISwitchFragme
             intent.putExtra("Recipe", jsonObject);
             startActivity(intent);
     }
+
 }

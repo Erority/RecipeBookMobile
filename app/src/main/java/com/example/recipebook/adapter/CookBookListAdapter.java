@@ -88,7 +88,7 @@ public class CookBookListAdapter extends RecyclerView.Adapter<CookBookListAdapte
         public void bindToView(Recipe recipe){
             title.setText(recipe.getTitle());
 
-            if (recipe.getImage() != null) {
+            if (recipe.getImage() != null && !recipe.getImage().equals("")) {
                 byte[] bytesImage = Base64.getDecoder().decode(recipe.getImage());
                 Bitmap bmp = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
                 Bitmap resized = Bitmap.createScaledBitmap(bmp, 177, 140, true);

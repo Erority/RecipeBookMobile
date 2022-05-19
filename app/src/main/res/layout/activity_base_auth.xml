@@ -13,23 +13,24 @@
         android:layout_marginTop="180dp"
         android:background="@drawable/backdrop_base"
         >
+
         <TextView
             android:id="@+id/content_auth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Регистрация"
-            android:layout_marginTop="25dp"
             android:layout_marginStart="20dp"
-            android:textSize="34dp"
+            android:layout_marginTop="25dp"
             android:fontFamily="@font/inter_medium"
-            android:textColor="@color/font_color"/>
+            android:text="Регистрация"
+            android:textColor="@color/font_color"
+            android:textSize="34dp" />
 
         <FrameLayout
             android:id="@+id/auth_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/content_auth"
-            android:layout_marginTop="26dp" />
+            android:layout_marginTop="12dp" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,6 +32,7 @@ public class UserService {
 
 
     private MutableLiveData<User> authUser = new MutableLiveData<>();
+    private MutableLiveData<String> errorString = new MutableLiveData<>();
 
     public UserService(String email, String password) {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder().addInterceptor(new Interceptor() {
@@ -80,11 +81,15 @@ public class UserService {
                     @Override
                     public void onResponse(Call<User> call, retrofit2.Response<User> response) {
                         if (response.isSuccessful()) {
+                            authUser.setValue(response.body());
+                        } else {
+                            errorString.setValue(errorString.getValue());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
+                        errorString.setValue(t.getLocalizedMessage().toString());
                     }
                 });
     }
@@ -93,12 +98,16 @@ public class UserService {
         userCall.getUser().enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, retrofit2.Response<User> response) {
-                authUser.setValue(response.body());
+                if (response.isSuccessful())
+                    authUser.setValue(response.body());
+                else
+                    errorString.setValue(errorString.getValue());
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
 
+                errorString.setValue(errorString.getValue());
             }
         });
     }
@@ -109,14 +118,22 @@ public class UserService {
             public void onResponse(Call<User> call, retrofit2.Response<User> response) {
                 if(response.isSuccessful())
                     System.out.println("DEBUG: User was putting");
+                else
+                    errorString.setValue(errorString.getValue());
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
 
+                errorString.setValue(errorString.getValue());
             }
         });
     }
+
+    public MutableLiveData<String> getErrorString() {
+        return  errorString;
+    }
+
 
     public MutableLiveData<User> getAuthUser() {
         return authUser;

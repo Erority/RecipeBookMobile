@@ -25,6 +25,7 @@
 
 
         <EditText
+            android:padding="5dp"
             android:id="@+id/enterTextPhone"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -45,6 +46,7 @@
 
 
         <EditText
+            android:padding="5dp"
             android:id="@+id/enterPassword"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -52,7 +54,8 @@
             android:textSize="17dp"
             android:textColor="@color/font_color"
             android:fontFamily="@font/inter_medium"
-            android:ems="10" />
+            android:ems="10"
+            android:inputType="textPassword"/>
 
         <LinearLayout
             android:gravity="bottom"

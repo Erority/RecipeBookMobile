@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import android.preference.PreferenceManager;
@@ -15,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.recipebook.R;
 import com.example.recipebook.databinding.FragmentAuthBinding;
-import com.example.recipebook.databinding.FragmentCookbookBinding;
 import com.example.recipebook.interfaces.ISwitchFragment;
 import com.example.recipebook.model.Recipe;
 import com.example.recipebook.model.User;
@@ -35,6 +35,7 @@ public class AuthFragment extends Fragment {
     private ISwitchFragment iSwitchFragment;
     private UserService userService;
 
+    private MutableLiveData<String> validationError = new MutableLiveData<>();
 
     public AuthFragment(ISwitchFragment iSwitchFragment) {
         this.iSwitchFragment = iSwitchFragment;
@@ -67,6 +68,9 @@ public class AuthFragment extends Fragment {
         binding.btnEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!validation())
+                    return;
+
                 userService = new UserService(binding.enterTextPhone.getText().toString(), binding.enterPassword.getText().toString());
                 userService.getUser();
 
@@ -101,5 +105,23 @@ public class AuthFragment extends Fragment {
 
                 }
             });
+
+            userService.getErrorString().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
+                }
+            });
+    }
+
+    private boolean validation() {
+        if (binding.enterTextPhone.getText().toString().trim().equals("")){
+            Toast.makeText(getContext(), "Заполните почту или номер телефона", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (binding.enterPassword.getText().toString().trim().equals("")){
+            Toast.makeText(getContext(), "Заполните пароль", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 }

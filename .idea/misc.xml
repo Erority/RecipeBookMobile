@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="..\:/Users/progr/AndroidStudioProjects/RecipeBook/app/src/main/res/drawable/background_card.xml" value="0.213" />
         <entry key="..\:/Users/progr/AndroidStudioProjects/RecipeBook/app/src/main/res/drawable/background_pick_photo.xml" value="0.1555" />
         <entry key="..\:/Users/progr/AndroidStudioProjects/RecipeBook/app/src/main/res/drawable/bottom_recipe_layout.xml" value="0.1555" />
@@ -24,6 +25,28 @@
         <entry key="..\:/Users/progr/AndroidStudioProjects/RecipeBook/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="..\:/Users/progr/AndroidStudioProjects/RecipeBook/app/src/main/res/layout/fragment_reg.xml" value="0.18" />
         <entry key="..\:/Users/progr/AndroidStudioProjects/RecipeBook/app/src/main/res/layout/item_cookbook.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/backdrop_base.xml" value="0.12" />
+        <entry key="app/src/main/res/drawable/circle.xml" value="0.1285" />
+        <entry key="app/src/main/res/drawable/custom_button.xml" value="0.12" />
+        <entry key="app/src/main/res/drawable/edittext_input.xml" value="0.12" />
+        <entry key="app/src/main/res/drawable/grid.xml" value="0.125" />
+        <entry key="app/src/main/res/drawable/heart.xml" value="0.1435" />
+        <entry key="app/src/main/res/drawable/image_circle.xml" value="0.1285" />
+        <entry key="app/src/main/res/drawable/recipe_to_favourite_btnlayout.xml" value="0.12" />
+        <entry key="app/src/main/res/drawable/rounded_image_view.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/user.xml" value="0.1435" />
+        <entry key="app/src/main/res/layout/activity_add_new_recipe.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_base_auth.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/activity_base_tab.xml" value="0.1969146728515625" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.14311043566362716" />
+        <entry key="app/src/main/res/layout/activity_recipe.xml" value="0.3011474609375" />
+        <entry key="app/src/main/res/layout/activity_start.xml" value="0.14311043566362716" />
+        <entry key="app/src/main/res/layout/fragment_auth.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/fragment_cookbook.xml" value="0.14311043566362716" />
+        <entry key="app/src/main/res/layout/fragment_favourites.xml" value="0.14311043566362716" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.10317971056597086" />
+        <entry key="app/src/main/res/layout/fragment_reg.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/recipe_favourite_button_layout.xml" value="0.1344984802431611" />
       </map>
     </option>
   </component>

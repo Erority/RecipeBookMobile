@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.base_tab_activity.profile_fragment.ProfileFragment">
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,6 +11,7 @@
         android:orientation="vertical">
 
     <ImageButton
+        android:id="@+id/btnBack"
         android:layout_marginStart="20dp"
         android:layout_marginTop="42dp"
         android:background="@null"
@@ -28,12 +30,26 @@
             android:textColor="@color/font_color"
             android:fontFamily="@font/inter_medium"/>
 
-        <ImageView
-            android:id="@+id/userImage"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center"
+        <androidx.cardview.widget.CardView
             android:layout_width="145dp"
-            android:layout_height="145dp"/>
+            android:layout_height="145dp"
+            android:elevation="12dp"
+            android:id="@+id/view2"
+            app:cardCornerRadius="60dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            android:thicknessRatio="1.9">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="145dp"
+                android:id="@+id/userImage"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/>
+        </androidx.cardview.widget.CardView>
 
         <ImageButton
             android:id="@+id/btnUserImage"
@@ -56,6 +72,7 @@
 
 
         <EditText
+            android:padding="5dp"
             android:layout_marginHorizontal="20dp"
             android:id="@+id/enterTextPhone"
             android:layout_width="match_parent"
@@ -78,6 +95,7 @@
 
 
         <EditText
+            android:padding="5dp"
             android:layout_marginHorizontal="20dp"
             android:id="@+id/enterName"
             android:layout_width="match_parent"
@@ -100,6 +118,7 @@
 
 
         <EditText
+            android:padding="5dp"
             android:layout_marginHorizontal="20dp"
             android:id="@+id/enterEmail"
             android:layout_width="match_parent"

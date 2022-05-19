@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
         <ImageButton
+            android:id="@+id/btnBack"
             android:layout_marginStart="20dp"
             android:layout_marginTop="42dp"
             android:background="@null"
@@ -49,10 +50,12 @@
             <TableRow>
                 <FrameLayout android:layout_gravity="center">
 
+
                     <ImageView
+                        android:id="@+id/imageRecipe"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
-                        android:background="@drawable/background_pick_photo"
+                        app:shapeAppearanceOverlay="@style/roundedImageView"
                         android:layout_width="70dp"
                         android:layout_height="70dp"/>
                     <ImageButton
@@ -84,6 +87,7 @@
 
 
                     <EditText
+                        android:padding="5dp"
                         android:lines="2"
                         android:id="@+id/enterRecipeName"
                         android:layout_width="match_parent"
@@ -119,6 +123,7 @@
 
 
                 <EditText
+                    android:padding="5dp"
                     android:id="@+id/enterMinutes"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -152,6 +157,7 @@
 
 
                     <EditText
+                        android:padding="5dp"
                         android:id="@+id/enterPortions"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
@@ -187,6 +193,9 @@
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:minHeight="200dp"
+                android:gravity="top"
+                android:padding="5dp"
                 android:background="@drawable/custom_inpute"
                 android:textSize="17dp"
                 android:textColor="@color/font_color"

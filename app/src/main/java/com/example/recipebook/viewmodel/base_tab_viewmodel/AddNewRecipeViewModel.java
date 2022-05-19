@@ -13,7 +13,6 @@ public class AddNewRecipeViewModel extends ViewModel {
     private MutableLiveData<Recipe> recipeToAdd = new MutableLiveData<Recipe>();
 
     public AddNewRecipeViewModel(){
-        recipeService = new RecipeService();
     }
 
     public void addRecipe() {

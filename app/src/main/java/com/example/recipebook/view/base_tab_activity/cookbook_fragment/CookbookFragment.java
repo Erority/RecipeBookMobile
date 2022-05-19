@@ -1,8 +1,11 @@
 package com.example.recipebook.view.base_tab_activity.cookbook_fragment;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -22,6 +26,9 @@ import com.example.recipebook.adapter.CookBookListAdapter;
 import com.example.recipebook.databinding.FragmentCookbookBinding;
 import com.example.recipebook.interfaces.AdapterItemClickListener;
 import com.example.recipebook.model.Recipe;
+import com.example.recipebook.model.User;
+import com.example.recipebook.service.RecipeService;
+import com.example.recipebook.utils.UpdateFavouriteRecipes;
 import com.example.recipebook.view.add_new_recipe.AddNewRecipeActivity;
 import com.example.recipebook.view.recipe_activity.RecipeActivity;
 import com.example.recipebook.viewmodel.base_tab_viewmodel.CookbookViewModel;
@@ -36,6 +43,14 @@ public class CookbookFragment extends Fragment implements AdapterItemClickListen
     private CookbookViewModel viewModel;
     private CookBookListAdapter adapter;
 
+    private UpdateFavouriteRecipes updateFavouriteRecipes;
+
+    public CookbookFragment(UpdateFavouriteRecipes updateFavouriteRecipes){
+        this.updateFavouriteRecipes = updateFavouriteRecipes;
+    }
+
+    public static final int ADD_OR_DELETE_RECIPE_CODE = 2;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +62,7 @@ public class CookbookFragment extends Fragment implements AdapterItemClickListen
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), AddNewRecipeActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, ADD_OR_DELETE_RECIPE_CODE);
             }
         });
 
@@ -73,6 +88,13 @@ public class CookbookFragment extends Fragment implements AdapterItemClickListen
 
             }
         });
+
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
     private void setAdapter(){
@@ -96,6 +118,28 @@ public class CookbookFragment extends Fragment implements AdapterItemClickListen
         setAdapter();
 
         viewModel = new ViewModelProvider(requireActivity()).get(CookbookViewModel.class);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String authUser = preferences.getString("AuthUser", "");
+        String password = preferences.getString("password", "");
+
+        Gson gson = new Gson();
+
+        User user = gson.fromJson(authUser, User.class);
+        viewModel.setRecipeService(new RecipeService(user.getEmail(), password));
+
+        setObservers();
+
+        return binding.getRoot();
+    }
+
+    private void setObservers() {
+
+        viewModel.getAllRecipes().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(List<Recipe> recipes) {
+                viewModel.setAllListRecipe(recipes);
+            }
+        });
 
         viewModel.getRecipes().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
             @Override
@@ -113,8 +157,6 @@ public class CookbookFragment extends Fragment implements AdapterItemClickListen
                 binding.searchEditText.setText("");
             }
         });
-
-        return binding.getRoot();
     }
 
     @Override
@@ -123,6 +165,14 @@ public class CookbookFragment extends Fragment implements AdapterItemClickListen
         Gson gson = new Gson();
         String jsonObject = gson.toJson(recipe);
         intent.putExtra("Recipe", jsonObject);
-        getContext().startActivity(intent);
+        startActivityForResult(intent, ADD_OR_DELETE_RECIPE_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        viewModel.updateRecipes();
+        updateFavouriteRecipes.isUpdate.setValue(true);
     }
 }

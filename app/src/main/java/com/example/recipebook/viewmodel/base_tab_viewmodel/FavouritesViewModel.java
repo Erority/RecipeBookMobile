@@ -26,10 +26,6 @@ public class FavouritesViewModel extends ViewModel {
 
 
     public FavouritesViewModel(){
-
-        recipeService = new RecipeService();
-        recipes = recipeService.getFavouritesRecipes();
-        allRecipes = recipeService.getFavouritesRecipes();
     }
 
     public void filterCollection() {
@@ -44,6 +40,10 @@ public class FavouritesViewModel extends ViewModel {
             recipes.setValue(buffer);
     }
 
+    public void updateFavouriteList(){
+        recipeService.updateFavouriteRecipe();
+    }
+
 
     public MutableLiveData<List<Recipe>> getRecipesList() {
         return recipes;
@@ -56,5 +56,14 @@ public class FavouritesViewModel extends ViewModel {
 
     public MutableLiveData<String> getToastString() {
         return toastString;
+    }
+
+    public void setRecipeService(RecipeService recipeService){
+        this.recipeService = recipeService;
+
+        recipeService.callFavouritesRecipes();
+
+        allRecipes = recipeService.getFavouriteRecipes();
+        recipes = recipeService.getFavouriteRecipes();
     }
 }

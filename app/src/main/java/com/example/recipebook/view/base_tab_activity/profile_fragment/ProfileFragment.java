@@ -26,9 +26,13 @@ import com.example.recipebook.R;
 import com.example.recipebook.databinding.FragmentProfileBinding;
 import com.example.recipebook.model.User;
 import com.example.recipebook.service.UserService;
+import com.example.recipebook.utils.ImageConverter;
 import com.google.gson.Gson;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Base64;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProfileFragment extends Fragment {
 
@@ -36,6 +40,8 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
 
     private UserService userService;
+
+    private Bitmap bitmap;
 
     public ProfileFragment() {
     }
@@ -70,6 +76,9 @@ public class ProfileFragment extends Fragment {
         binding.btnEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!validation())
+                    return;
+
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                 String authUser = preferences.getString("AuthUser", "");
                 String password = preferences.getString("password", "");
@@ -79,11 +88,23 @@ public class ProfileFragment extends Fragment {
                 User user = gson.fromJson(authUser, User.class);
 
                 userService = new UserService(user.getEmail(), password);
+                if(bitmap != null) {
+                    user.setProfilePicture(
+                            new ImageConverter().getStringByteFromBitmap(bitmap));
+                }
                 user.setEmail(binding.enterEmail.getText().toString());
                 user.setPhoneNumber(binding.enterTextPhone.getText().toString());
                 user.setNickname(binding.enterName.getText().toString());
 
                 userService.putUser(user);
+                Toast.makeText(getContext(), "Данные успешно изменн=енны", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
             }
         });
     }
@@ -114,7 +135,40 @@ public class ProfileFragment extends Fragment {
         if(requestCode == CAMERA_ACTION_RESULT && resultCode == Activity.RESULT_OK){
             Bundle bundle = data.getExtras();
             Bitmap finalPhoto  = (Bitmap)bundle.get("data");
+            this.bitmap = finalPhoto;
             binding.userImage.setImageBitmap(finalPhoto);
         }
+    }
+
+    private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+    private static final Pattern VALIDE_PHONE_REGEX =
+            Pattern.compile("((8|\\+7)-?)?\\(?\\d{3}\\)?-?\\d{1}-?\\d{1}-?\\d{1}-?\\d{1}-?\\d{1}-?\\d{1}-?\\d{1}", Pattern.CASE_INSENSITIVE);
+
+
+    private boolean validation() {
+        Matcher emailMatcher = VALID_EMAIL_ADDRESS_REGEX.matcher(binding.enterEmail.getText().toString());
+        Matcher phoneMatcher = VALIDE_PHONE_REGEX.matcher(binding.enterTextPhone.getText().toString());
+
+        if (binding.enterTextPhone.getText().toString().equals("")){
+            Toast.makeText(getContext(), "Введите телефон", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (binding.enterName.getText().toString().equals("")) {
+            Toast.makeText(getContext(), "Введите имя", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (binding.enterEmail.getText().toString().equals("")) {
+            Toast.makeText(getContext(), "Введите имя", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (emailMatcher.find() == false) {
+            Toast.makeText(getContext(), "Почта неверного формата", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (phoneMatcher.find() == false){
+            System.out.println(phoneMatcher.find());
+            Toast.makeText(getContext(), "Телефон неверного формата", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
     }
 }

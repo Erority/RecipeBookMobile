@@ -20,6 +20,7 @@
             android:layout_height="wrap_content">
 
             <ImageButton
+                android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -196,14 +197,18 @@
         android:layout_width="match_parent"
         android:layout_height="85dp">
         <ImageButton
+            android:id="@+id/addOrDeleteFromFavourites"
+            android:src="@drawable/heart"
+            android:background="@drawable/background_card"
             android:layout_weight="1"
             android:layout_marginTop="11dp"
             android:layout_marginStart="30dp"
             android:layout_width="78dp"
             android:layout_height="56dp"/>
         <Button
+            android:id="@+id/btnDelete"
             android:backgroundTint="@color/second_color"
-            android:text="Профиль"
+            android:text="Удалить"
             android:layout_marginEnd="22dp"
             android:layout_weight="3"
             android:layout_marginTop="11dp"
