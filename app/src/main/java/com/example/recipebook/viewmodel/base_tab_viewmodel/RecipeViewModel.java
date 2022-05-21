@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.recipebook.interfaces.PutCallBack;
 import com.example.recipebook.model.Recipe;
+import com.example.recipebook.model.User;
 import com.example.recipebook.service.RecipeService;
+import com.example.recipebook.service.UserService;
 
 import java.util.List;
 
@@ -14,11 +16,13 @@ public class RecipeViewModel extends ViewModel {
     private MutableLiveData<Recipe> delFavouriteRecipe = new MutableLiveData<>();
     private MutableLiveData<Recipe> delRecipe = new MutableLiveData<>();
     private MutableLiveData<List<Recipe>> favouritesRecipes = new MutableLiveData<List<Recipe>>();
+    private MutableLiveData<User> recipeAuthor = new MutableLiveData<>();
 
-    private Recipe currentRecipe;
+     private Recipe currentRecipe;
     private MutableLiveData<Boolean> hasInFavourites = new MutableLiveData<>();
 
     private RecipeService recipeService;
+    private UserService userService;
 
     public RecipeViewModel(){
     }
@@ -49,7 +53,17 @@ public class RecipeViewModel extends ViewModel {
         recipeService.callFavouritesRecipes();
 
         hasInFavourites.setValue(false);
+    }
 
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+        userService.getUserById(currentRecipe.getUserId());
+
+        recipeAuthor = userService.getUserById();
+    }
+
+    public MutableLiveData<User> getRecipeAuthor() {
+        return recipeAuthor;
     }
 
     public MutableLiveData<Recipe> getDelRecipe() {

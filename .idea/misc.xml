@@ -44,7 +44,7 @@
         <entry key="app/src/main/res/layout/fragment_auth.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/fragment_cookbook.xml" value="0.14311043566362716" />
         <entry key="app/src/main/res/layout/fragment_favourites.xml" value="0.14311043566362716" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.10317971056597086" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_reg.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/recipe_favourite_button_layout.xml" value="0.1344984802431611" />
       </map>

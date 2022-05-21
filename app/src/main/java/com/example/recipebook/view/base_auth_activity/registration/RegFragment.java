@@ -97,12 +97,17 @@ public class RegFragment extends Fragment {
         });
     }
 
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+
+    private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+    private static final Pattern VALIDE_PHONE_REGEX =
+            Pattern.compile("((8|\\+7)-?)?\\(?\\d{3}\\)?-?\\d{1}-?\\d{1}-?\\d{1}-?\\d{1}-?\\d{1}-?\\d{1}-?\\d{1}", Pattern.CASE_INSENSITIVE);
 
     private boolean validation() {
 
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(binding.enterEmail.getText().toString());
+        Matcher emailMatcher = VALID_EMAIL_ADDRESS_REGEX.matcher(binding.enterEmail.getText().toString());
+        Matcher phoneMatcher = VALIDE_PHONE_REGEX.matcher(binding.enterTextPhone.getText().toString());
 
         if(binding.enterName.getText().toString().trim().equals("")){
             Toast.makeText(getContext(), "Введите имя", Toast.LENGTH_LONG).show();
@@ -116,10 +121,11 @@ public class RegFragment extends Fragment {
         } else if (binding.enterTextPhone.getText().toString().trim().equals("")){
             Toast.makeText(getContext(), "Введите номер телефона", Toast.LENGTH_LONG).show();
             return false;
-        } else if (matcher.find()) {
+        } else if (emailMatcher.find() == false) {
             Toast.makeText(getContext(), "Почта неверного формата", Toast.LENGTH_LONG).show();
             return false;
-        } else if (!binding.enterTextPhone.getText().toString().matches("8(?:-\\d{3}){2}(?:-\\d{2}){2}")){
+        } else if (phoneMatcher.find() == false){
+            System.out.println(phoneMatcher.find());
             Toast.makeText(getContext(), "Телефон неверного формата", Toast.LENGTH_LONG).show();
             return false;
         }

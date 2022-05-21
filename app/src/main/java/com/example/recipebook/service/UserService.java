@@ -30,6 +30,7 @@ public class UserService {
     private String BASE_URL = "http://94.228.124.99:5500/api/";
     private UserCall userCall;
 
+    private MutableLiveData<User> userById = new MutableLiveData<>();
 
     private MutableLiveData<User> authUser = new MutableLiveData<>();
     private MutableLiveData<String> errorString = new MutableLiveData<>();
@@ -94,6 +95,24 @@ public class UserService {
                 });
     }
 
+    public void getUserById(int id){
+        userCall.getUserById(id).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, retrofit2.Response<User> response) {
+                if(response.isSuccessful()){
+                    userById.setValue(response.body());
+                } else {
+                    errorString.setValue(response.errorBody().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                errorString.setValue(t.getLocalizedMessage());
+            }
+        });
+    }
+
     public void getUser() {
         userCall.getUser().enqueue(new Callback<User>() {
             @Override
@@ -134,6 +153,9 @@ public class UserService {
         return  errorString;
     }
 
+    public MutableLiveData<User> getUserById() {
+        return userById;
+    }
 
     public MutableLiveData<User> getAuthUser() {
         return authUser;

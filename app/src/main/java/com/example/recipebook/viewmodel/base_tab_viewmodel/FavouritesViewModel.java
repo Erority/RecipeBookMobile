@@ -34,10 +34,11 @@ public class FavouritesViewModel extends ViewModel {
 
         if (buffer.size() <= 0) {
             recipes.setValue(allRecipes.getValue());
-
             toastString.setValue("По вашему запросу нет резултатов");
-        } else
+        } else {
             recipes.setValue(buffer);
+            toastString.setValue("Найдено " + buffer.size() + " элементов");
+        }
     }
 
     public void updateFavouriteList(){

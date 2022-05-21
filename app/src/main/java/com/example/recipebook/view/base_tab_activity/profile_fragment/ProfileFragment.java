@@ -121,11 +121,13 @@ public class ProfileFragment extends Fragment {
         binding.enterEmail.setText(user.getEmail());
         binding.enterTextPhone.setText(user.getPhoneNumber());
 
+        if(user.getProfilePicture() != null) {
 
-        byte[] bytesImage = Base64.getDecoder().decode(user.getProfilePicture());
-        Bitmap bmp = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
+            byte[] bytesImage = Base64.getDecoder().decode(user.getProfilePicture());
+            Bitmap bmp = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
 
-        binding.userImage.setImageBitmap(bmp);
+            binding.userImage.setImageBitmap(bmp);
+        }
     }
 
     @Override

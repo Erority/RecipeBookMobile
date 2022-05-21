@@ -38,7 +38,9 @@ public class RecipeActivity extends AppCompatActivity {
 
     private ActivityRecipeBinding binding;
     private Recipe currentRecipe;
+    private User authorOfRecipe;
     private RecipeViewModel viewModel;
+
 
     private MutableLiveData<Recipe> delRecipe = new MutableLiveData<>();
     private MutableLiveData<List<Recipe>> favouritesRecipes = new MutableLiveData<List<Recipe>>();
@@ -66,8 +68,9 @@ public class RecipeActivity extends AppCompatActivity {
         Recipe recipe = gson.fromJson(jsonRecipe, Recipe.class);
         currentRecipe = recipe;
 
-        viewModel.setRecipeService(new RecipeService(user.getEmail(), password));
         viewModel.setCurrentRecipe(currentRecipe);
+        viewModel.setRecipeService(new RecipeService(user.getEmail(), password));
+        viewModel.setUserService(new UserService(user.getEmail(), password));
 
         setObservers();
 
@@ -122,6 +125,16 @@ public class RecipeActivity extends AppCompatActivity {
 
     private void setObservers(){
 
+        viewModel.getRecipeAuthor().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if(user != null){
+                    authorOfRecipe = user;
+                    binding.author.setText(user.getNickname());
+                }
+            }
+        });
+
         viewModel.getDelFavouriteRecipe().observe(this, new Observer<Recipe>() {
             @Override
             public void onChanged(Recipe recipe) {
@@ -163,6 +176,17 @@ public class RecipeActivity extends AppCompatActivity {
     }
 
     private void setUI(Recipe recipe) {
+        StringBuilder sb = new StringBuilder();
+
+        binding.recipeName.setText(recipe.getTitle());
+        binding.minutes.setText(sb.append(recipe.getCookingTimeMinutes()));
+        sb = new StringBuilder();
+        binding.portions.setText(sb.append(recipe.getPortions()));
+        binding.recipeContent.setText(recipe.getContents());
+
+        if (recipe.getImage() == null)
+            return;
+
         byte[] bytesImage = Base64.getDecoder().decode(recipe.getImage());
         Bitmap bmp = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
 
@@ -176,16 +200,8 @@ public class RecipeActivity extends AppCompatActivity {
         if(bmp != null)
             bitmap = Bitmap.createScaledBitmap(bmp, width, (int) (height * 0.4), false);
 
-        StringBuilder sb = new StringBuilder();
-
         if (bitmap != null)
             binding.imageView.setImageBitmap(bitmap);
-
-        binding.recipeName.setText(recipe.getTitle());
-        binding.minutes.setText(sb.append(recipe.getCookingTimeMinutes()));
-        sb = new StringBuilder();
-        binding.portions.setText(sb.append(recipe.getPortions()));
-        binding.recipeContent.setText(recipe.getContents());
     }
 
     @Override

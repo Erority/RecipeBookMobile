@@ -142,7 +142,7 @@
                 android:layout_height="60dp"
                 android:layout_marginHorizontal="37dp"
                 android:backgroundTint="@color/second_color"
-                android:text="Редактировать"
+                android:text="Сохранить изменения"
                 android:textSize="15dp"/>
         </LinearLayout>
 

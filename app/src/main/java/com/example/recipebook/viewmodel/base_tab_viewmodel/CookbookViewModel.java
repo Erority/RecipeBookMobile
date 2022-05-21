@@ -53,6 +53,10 @@ public class CookbookViewModel extends ViewModel {
     }
 
     public void filterCollection() {
+
+        if(searchString.getValue() == null)
+            return;
+
         List<Recipe> buffer = allListRecipe.stream()
                 .filter(r -> r.getTitle().contains(searchString.getValue())).collect(Collectors.toList());
 
@@ -60,8 +64,10 @@ public class CookbookViewModel extends ViewModel {
         if (buffer.size() <= 0) {
             recipes.setValue(allListRecipe);
             toastString.setValue("По вашему запросу нет резултатов");
-        } else
+        } else {
             recipes.setValue(buffer);
+            toastString.setValue("Найдено " + buffer.size() + " элементов");
+        }
     }
 
 
